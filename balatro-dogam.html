@@ -171,7 +171,7 @@ footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);font-si
   <div class="brandrow">
     <div class="brand">BALATRO <b>도감</b></div>
     <div class="search">
-      <input id="q" type="search" autocomplete="off" placeholder="검색: 조커 이름, 효과, 영문명, 초성(ㅅㅈ) 모두 가능" aria-label="검색">
+      <input id="q" type="search" autocomplete="off" placeholder="검색: 조커 이름, 효과 설명, 영문명" aria-label="검색">
       <button class="clear" id="qclear" aria-label="검색어 지우기" hidden>✕</button>
     </div>
     <div class="scope" id="scope" role="group" aria-label="검색 범위"></div>
@@ -209,7 +209,7 @@ const JOKER_RAW = [
 ['c','신비의 정점','Mystic Summit',5,'남은 버리기가 0회일 때 +15 배수','배수 버리기'],
 ['c','8번 공','8 Ball',5,'8이 득점할 때마다 1/4 확률로 타로 카드 1장 생성(소모품 칸 필요)','소모품 확률'],
 ['c','인쇄 오류','Misprint',4,'+0 ~ +23 배수 사이 무작위','배수'],
-['c','들어올린 주먹','Raised Fist',5,'손에 남은 카드 중 가장 낮은 숫자 카드의 랭크 ×2 만큼 +배수','배수 손패유지'],
+['c','들어올린 주먹','Raised Fist',5,'손에 남은 카드 중 가장 낮은 숫자 카드의 랭크 ×2 만큼 +배수','배수 들고있기'],
 ['c','혼돈의 광대','Chaos the Clown',4,'상점마다 무료 리롤 1회','경제 리롤'],
 ['c','무서운 얼굴','Scary Face',4,'페이스 카드가 득점할 때마다 +30 칩','칩 페이스'],
 ['c','추상화 조커','Abstract Joker',4,'보유한 조커 1장당 +3 배수','배수 슬롯'],
@@ -235,7 +235,7 @@ const JOKER_RAW = [
 ['c','네모난 조커','Square Joker',4,'정확히 4장을 내면 +4 칩이 영구 누적','칩 성장 핸드'],
 ['c','조무래기','Riff-Raff',6,'블라인드 선택 시 일반 조커 2장 생성(슬롯 필요)','슬롯'],
 ['c','사진','Photograph',5,'처음 득점하는 페이스 카드 X2 배수','곱배수 페이스'],
-['c','지정 주차 공간','Reserved Parking',6,'손에 남은 페이스 카드마다 1/2 확률로 $1','경제 페이스 손패유지 확률'],
+['c','지정 주차 공간','Reserved Parking',6,'손에 남은 페이스 카드마다 1/2 확률로 $1','경제 페이스 들고있기 확률'],
 ['c','우편 할인','Mail-In Rebate',4,'지정 랭크 카드를 버릴 때마다 $5 (라운드마다 랭크 변경)','경제 버리기'],
 ['c','환각','Hallucination',4,'부스터 팩을 열 때마다 1/2 확률로 타로 카드 1장 생성','소모품 확률'],
 ['c','점쟁이','Fortune Teller',6,'이번 런에서 사용한 타로 카드 1장당 +1 배수','배수 소모품'],
@@ -248,11 +248,11 @@ const JOKER_RAW = [
 ['c','황금 티켓','Golden Ticket',5,'골드 카드가 득점할 때마다 $4','경제 덱'],
 ['c','해적','Swashbuckler',4,'보유한 다른 조커들의 판매가 합만큼 +배수','배수 경제'],
 ['c','매달린 종이 조각','Hanging Chad',4,'처음 득점하는 카드를 2회 추가 발동','재발동'],
-['c','슛 더 문','Shoot the Moon',5,'손에 남은 퀸 1장당 +13 배수','배수 손패유지'],
+['c','슛 더 문','Shoot the Moon',5,'손에 남은 퀸 1장당 +13 배수','배수 들고있기'],
 // 희귀 (Uncommon)
 ['u','조커 스텐실','Joker Stencil',8,'빈 조커 슬롯 1칸당 X1 배수(자신 슬롯 포함)','곱배수 슬롯'],
 ['u','네 개의 손가락','Four Fingers',7,'카드 4장만으로 플러시와 스트레이트 성립','족보'],
-['u','마임','Mime',5,'손에 남은 카드의 효과를 한 번 더 발동','재발동 손패유지'],
+['u','마임','Mime',5,'손에 남은 카드의 효과를 한 번 더 발동','재발동 들고있기'],
 ['u','의식용 단검','Ceremonial Dagger',6,'블라인드 선택 시 오른쪽 조커를 파괴하고 그 판매가의 2배만큼 +배수 영구 누적','배수 성장'],
 ['u','대리석 조커','Marble Joker',6,'블라인드 선택 시 덱에 스톤 카드 1장 추가','덱'],
 ['u','도장 쿠폰','Loyalty Card',5,'핸드 6회마다 1번 X4 배수','곱배수'],
@@ -263,7 +263,7 @@ const JOKER_RAW = [
 ['u','변상증','Pareidolia',5,'모든 카드를 페이스 카드로 취급','페이스 유틸'],
 ['u','우주 조커','Space Joker',5,'1/4 확률로 낸 족보의 레벨 +1','족보 확률'],
 ['u','절도범','Burglar',6,'블라인드 선택 시 핸드 +3, 남은 버리기 전부 소멸','핸드 버리기'],
-['u','칠판','Blackboard',6,'손에 남은 카드가 전부 스페이드/클럽이면 X3 배수','곱배수 손패유지 무늬'],
+['u','칠판','Blackboard',6,'손에 남은 카드가 전부 스페이드/클럽이면 X3 배수','곱배수 들고있기 무늬'],
 ['u','육감','Sixth Sense',6,'첫 핸드가 6 한 장뿐이면 그 카드를 파괴하고 스펙트럴 카드 생성','소모품'],
 ['u','별자리','Constellation',6,'행성 카드를 사용할 때마다 X0.1 배수 영구 누적','곱배수 성장 족보'],
 ['u','도보 여행자','Hiker',5,'득점한 카드마다 영구적으로 +5 칩','칩 성장 덱'],
@@ -317,7 +317,7 @@ const JOKER_RAW = [
 // 레어 (Rare)
 ['r','DNA','DNA',8,'라운드 첫 핸드가 카드 1장이면 그 카드를 복사해 덱과 손패에 추가','덱 성장'],
 ['r','방랑자','Vagabond',8,'보유금이 $4 이하일 때 핸드를 내면 타로 카드 1장 생성','소모품 경제'],
-['r','남작','Baron',8,'손에 남은 킹 1장당 X1.5 배수','곱배수 손패유지'],
+['r','남작','Baron',8,'손에 남은 킹 1장당 X1.5 배수','곱배수 들고있기'],
 ['r','오벨리스크','Obelisk',8,'가장 많이 낸 족보가 아닌 족보를 낼 때마다 X0.2 배수 누적(최다 족보를 내면 초기화)','곱배수 성장 족보'],
 ['r','야구 카드','Baseball Card',8,'희귀(Uncommon) 등급 조커 각각이 X1.5 배수','곱배수'],
 ['r','고대 조커','Ancient Joker',8,'매 라운드 지정되는 무늬 카드 득점 시 X1.5 배수','곱배수 무늬'],
@@ -483,9 +483,9 @@ const ENH_RAW = [
 ['enh','배수 카드','Mult Card','득점 시 +4 배수','배수'],
 ['enh','와일드 카드','Wild Card','모든 무늬로 취급','무늬'],
 ['enh','유리 카드','Glass Card','득점 시 X2 배수, 사용 후 1/4 확률로 파괴','곱배수'],
-['enh','스틸 카드','Steel Card','손에 남아 있으면 X1.5 배수','곱배수 손패유지'],
+['enh','스틸 카드','Steel Card','손에 남아 있으면 X1.5 배수','곱배수 들고있기'],
 ['enh','스톤 카드','Stone Card','+50 칩. 랭크와 무늬가 없고 항상 득점','칩'],
-['enh','골드 카드','Gold Card','라운드 종료 시 손에 있으면 $3','경제 손패유지'],
+['enh','골드 카드','Gold Card','라운드 종료 시 손에 있으면 $3','경제 들고있기'],
 ['enh','럭키 카드','Lucky Card','득점 시 1/5 확률 +20 배수, 1/15 확률 $20','확률'],
 ['ed','포일','Foil','+50 칩','칩'],
 ['ed','홀로그래픽','Holographic','+10 배수','배수'],
@@ -493,7 +493,7 @@ const ENH_RAW = [
 ['ed','네거티브','Negative','조커라면 조커 슬롯 +1, 소모품이라면 소모품 칸 +1','슬롯'],
 ['seal','골드 실','Gold Seal','득점 시 $3','경제'],
 ['seal','레드 실','Red Seal','그 카드의 효과를 한 번 더 발동(재발동)','재발동'],
-['seal','블루 실','Blue Seal','라운드 종료 시 손에 있으면 마지막 낸 족보의 행성 카드 생성','소모품 손패유지'],
+['seal','블루 실','Blue Seal','라운드 종료 시 손에 있으면 마지막 낸 족보의 행성 카드 생성','소모품 들고있기'],
 ['seal','퍼플 실','Purple Seal','버릴 때 타로 카드 생성','소모품 버리기']
 ];
 const ENHS = ENH_RAW.map((a,i)=>({id:'e'+i,type:{enh:'enh',ed:'edition',seal:'seal'}[a[0]],kor:a[1],eng:a[2],eff:a[3],tags:a[4].split(' '),grp:{enh:'카드 강화',ed:'에디션',seal:'실(Seal)'}[a[0]]}));
@@ -681,15 +681,10 @@ const BYKOR={};ALL.forEach(x=>{if(!BYKOR[x.kor])BYKOR[x.kor]=x;});
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-// 초성 검색
-const CHO='ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ';
-function chosung(s){let r='';for(const ch of s){const c=ch.charCodeAt(0);if(c>=0xAC00&&c<=0xD7A3)r+=CHO[Math.floor((c-0xAC00)/588)];else if(ch!==' ')r+=ch;}return r;}
-const isCho=t=>/^[ㄱ-ㅎ]+$/.test(t);
 const norm=s=>String(s).toLowerCase().replace(/\s+/g,'');
 ALL.forEach(x=>{
   x.nameHay=norm([x.kor,x.eng].join(' '));
   x.effHay=norm([x.eff,(x.tags||[]).join(' '),x.note||'',x.hand||'',x.handEng||'',x.grp||'',TYPE_LABEL[x.type],x.rarName||''].join(' '));
-  x.cho=chosung(x.kor);
 });
 // 동의어·조사 처리: 한 단어를 여러 표현으로 확장
 const STOP=new Set(['조커','카드','하는','해주는','주는','있는','되는','것','좀','많이','관련','효과','같은','뭐','어떤','게']);
@@ -697,7 +692,7 @@ const SYN=[
  ['돈','$','이자','경제','수입','골드','달러','금전'],
  ['배수','mult'],
  ['재발동','다시발동','한번더','반복','다시'],
- ['손패','핸드크기','손에'],
+ ['손패','핸드크기'],
  ['버리기','버림','버려','버릴','디스카드'],
  ['파괴','부수','소멸','사라'],
  ['복사','복제','카피'],
@@ -719,15 +714,14 @@ function groups(q){
     const t=stem(raw), n=norm(t), v=new Set([n]);
     SYN.forEach(g=>{ if(g.some(w=>{const m=norm(w);return n===m||(m.length>=3&&n.includes(m));}))g.forEach(w=>v.add(norm(w))); });
     VERB.forEach(([re,vs])=>{ if(re.test(t))vs.forEach(w=>v.add(norm(w))); });
-    return {raw,cho:isCho(raw),v:[...v].filter(Boolean)};
+    return {raw,v:[...v].filter(Boolean)};
   });
 }
 function scoreItem(x,gs){
   let matched=0,score=0;
   for(const g of gs){
     let inN=false,inE=false;
-    if(g.cho){inN=x.cho.includes(g.raw);}
-    else{inN=g.v.some(w=>x.nameHay.includes(w));inE=g.v.some(w=>x.effHay.includes(w));}
+    inN=g.v.some(w=>x.nameHay.includes(w));inE=g.v.some(w=>x.effHay.includes(w));
     const hit=S.scope==='name'?inN:S.scope==='eff'?inE:(inN||inE);
     if(hit){matched++;score+=(inE?3:0)+(inN?2:0);}
   }
@@ -740,13 +734,13 @@ function rank(list,q,relaxed){
 }
 function hl(text,q){
   let out=esc(text);if(!q||!q.trim()||S.scope==='name')return out;
-  const ws=[...new Set(groups(q).filter(g=>!g.cho).flatMap(g=>g.v).filter(w=>w.length>=2||/[가-힣]/.test(w)))].sort((a,b)=>b.length-a.length);
+  const ws=[...new Set(groups(q).flatMap(g=>g.v).filter(w=>w.length>=2||/[가-힣]/.test(w)))].sort((a,b)=>b.length-a.length);
   ws.forEach(w=>{const re=new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');out=out.replace(/(<mark>.*?<\/mark>)|([^<]+)/g,(m,mk,tx)=>mk?mk:tx.replace(re,s=>'<mark>'+s+'</mark>'));});
   return out;
 }
 function buildHay(b){return norm([b.title,b.summary,b.tag,b.core.join(' '),b.support.join(' '),b.deck.join(' '),b.voucher.join(' '),b.cards.join(' '),b.steps.join(' ')].join(' '));}
 BUILDS.forEach(b=>b.hay=buildHay(b));
-function matchBuild(b,q){const gs=groups(q);if(!gs.length)return true;return gs.every(g=>g.cho?chosung(b.core.join('')+b.support.join('')+b.title).includes(g.raw):g.v.some(w=>b.hay.includes(w)));}
+function matchBuild(b,q){const gs=groups(q);if(!gs.length)return true;return gs.every(g=>g.v.some(w=>b.hay.includes(w)));}
 
 // 상태
 const TABS=[['home','전체'],['jokers','조커'],['consum','타로·행성·스펙트럴'],['vouchers','바우처'],['decks','덱·스테이크'],['cards','강화·에디션·실'],['hands','족보표'],['builds','빌드 가이드'],['glossary','용어']];
@@ -785,7 +779,7 @@ function viewHome(){
       const l=pool.filter(x=>x.type===t);if(l.length)groups.push([t,l]);});
     const bl=BUILDS.filter(b=>matchBuild(b,q));
     const total=groups.reduce((a,g)=>a+g[1].length,0);
-    if(!total&&!bl.length)return `<div class="empty">"${esc(q)}"에 대한 결과가 없습니다.<br>영문명이나 초성(예: ㅅㅈ)으로도 검색해 보세요.</div>`;
+    if(!total&&!bl.length)return `<div class="empty">"${esc(q)}"에 대한 결과가 없습니다.<br>영문명으로도 검색해 보세요.</div>`;
     return `<div class="bar"><h2>검색 결과</h2><span class="count">${total}개 항목 · 빌드 ${bl.length}개</span></div>`+(relaxed?`<p class="note">모든 단어가 들어간 항목이 없어서, 일부 단어만 맞는 항목을 관련도 순으로 보여줍니다. 단어를 줄이거나 바꿔 보세요.</p>`:'')+
       groups.map(([t,l])=>`<section class="group"><div class="lab">${TYPE_LABEL[t]} · ${l.length}</div>${gridHTML(l)}</section>`).join('')+
       (bl.length?`<section class="group"><div class="lab">빌드 가이드 · ${bl.length}</div>${bl.map(buildHTML).join('')}</section>`:'');
@@ -795,18 +789,18 @@ function viewHome(){
   const top=BUILDS.filter(b=>['b-start','b-face','b-planet'].includes(b.id));
   return `<section class="hero"><div class="group"><h1>발라트로 <b>한국어 도감</b></h1>
    <p class="sub">조커 ${n('joker')}종, 타로·행성·스펙트럴, 바우처, 덱을 한국어로 찾고, 빌드 구성까지 한 곳에서 봅니다.</p>
-   <p class="tip">이름뿐 아니라 <b>효과 설명</b>으로도 찾을 수 있습니다. 검색창 옆에서 범위를 <kbd>효과</kbd>로 바꾸면 이름은 무시하고 설명만 봅니다. 초성(<kbd>ㅅㅈ</kbd>)과 영문명도 됩니다.</p></div>
+   <p class="tip">이름뿐 아니라 <b>효과 설명</b>으로도 찾을 수 있습니다. 검색창 옆에서 범위를 <kbd>효과</kbd>로 바꾸면 이름은 무시하고 설명만 봅니다. 영문명도 됩니다.</p></div>
    <div class="stats">${stat('jokers',n('joker'),'조커')}${stat('consum',n('tarot')+n('planet')+n('spectral'),'타로·행성·스펙트럴')}${stat('vouchers',n('voucher'),'바우처')}${stat('decks',n('deck'),'덱')}${stat('cards',n('enh')+n('edition')+n('seal'),'강화·에디션·실')}${stat('builds',BUILDS.length,'빌드 가이드')}</div></section>
   <section class="group"><div class="bar"><h2>효과로 찾아보기</h2></div><div class="bar">
    ${['버리기 늘려주는','돈 버는','페이스 카드 재발동','손패 크기','확률 2배','족보 레벨업','상점 할인','덱에 카드 추가','패배 방지','소모품 생성'].map(t=>`<button class="chip" data-ex="${t}">${t}</button>`).join('')}
   </div></section>
   <section class="group"><div class="bar"><h2>빠른 찾기</h2></div><div class="bar">
-   ${[['곱배수','곱배수 조커'],['재발동','재발동 조커'],['경제','돈 버는 조커'],['성장','성장형 조커'],['페이스','페이스 카드'],['복사','복사 조커'],['손패유지','손에 남기는 효과'],['확률','확률 조커']].map(([t,l])=>`<button class="chip" data-quicktag="${t}">${l}</button>`).join('')}
+   ${[['곱배수','곱배수 조커'],['재발동','재발동 조커'],['경제','돈 버는 조커'],['성장','성장형 조커'],['페이스','페이스 카드'],['복사','복사 조커'],['들고있기','손에 남기는 효과'],['확률','확률 조커']].map(([t,l])=>`<button class="chip" data-quicktag="${t}">${l}</button>`).join('')}
   </div></section>
   <section class="group"><div class="bar"><h2>처음이라면 이 빌드부터</h2><button class="chip" data-tab="builds" style="margin-left:auto">빌드 전체 보기</button></div>${top.map(buildHTML).join('')}</section>`;
 }
 
-const JTAGS=['곱배수','배수','칩','경제','성장','재발동','복사','페이스','족보','무늬','덱','소모품','확률','핸드','버리기','손패유지','슬롯','리롤','유틸'];
+const JTAGS=['곱배수','배수','칩','경제','성장','재발동','복사','페이스','족보','무늬','덱','소모품','확률','핸드','버리기','들고있기','슬롯','리롤','유틸'];
 function viewJokers(){
   let l=JOKERS.filter(x=>(S.rar==='all'||x.rar===S.rar)&&[...S.tags].every(t=>x.tags.includes(t))&&(!S.fav||S.favs.has(x.id))&&(!S.q.trim()||matchItem(x,S.q)));
   if(S.q.trim()&&S.sort==='dex')l=rank(l,S.q,false);
@@ -890,7 +884,7 @@ function openItem(id){
   if(x.type==='joker'){meta.push(`<span class="pill">등급 <b>${x.rarName}</b></span>`);
     const bl=BUILDS.filter(b=>[...b.core,...b.support].includes(x.kor));
     if(bl.length)extra+=`<div class="rel"><div class="lab">이 조커가 쓰이는 빌드</div>${bl.map(b=>`<button class="link" data-gob="${b.id}">${esc(b.title)}<small>${[...b.core].includes(x.kor)?'핵심 조커':'보조 조커'} · ${esc(b.tag)}</small></button>`).join('')}</div>`;
-    const sim=JOKERS.filter(j=>j.id!==x.id&&j.tags.some(t=>['곱배수','배수','칩','경제','성장','재발동','복사','페이스','족보','무늬','덱','소모품','확률','손패유지'].includes(t)&&x.tags.includes(t))).map(j=>({j,s:j.tags.filter(t=>x.tags.includes(t)).length})).sort((a,b)=>b.s-a.s).slice(0,6);
+    const sim=JOKERS.filter(j=>j.id!==x.id&&j.tags.some(t=>['곱배수','배수','칩','경제','성장','재발동','복사','페이스','족보','무늬','덱','소모품','확률','들고있기'].includes(t)&&x.tags.includes(t))).map(j=>({j,s:j.tags.filter(t=>x.tags.includes(t)).length})).sort((a,b)=>b.s-a.s).slice(0,6);
     if(sim.length)extra+=`<div class="rel"><div class="lab">비슷한 태그의 조커</div>${sim.map(({j})=>`<button class="link" data-open="${j.id}">${esc(j.kor)} <span style="color:var(--muted)">(${esc(j.eng)})</span><small>${esc(j.eff)}</small></button>`).join('')}</div>`;
   }
   if(x.type==='planet'){const h=HANDS[x.hi];const lv=[1,3,5,10].map(L=>`<tr><td class="n">Lv ${L}</td><td class="n">${h[2]+(L-1)*h[4]}</td><td class="n">${h[3]+(L-1)*h[5]}</td><td class="n">${((h[2]+(L-1)*h[4])*(h[3]+(L-1)*h[5])).toLocaleString('ko-KR')}</td></tr>`).join('');
@@ -916,7 +910,7 @@ function render(){
   $('#view').innerHTML=crossNote+v;
   $('#qclear').hidden=!S.q;
   $('#scope').innerHTML=[['all','전체'],['name','이름'],['eff','효과']].map(([k,n])=>`<button class="chip" data-scope="${k}" aria-pressed="${S.scope===k}">${n}</button>`).join('');
-  $('#q').placeholder={all:'검색: 이름, 효과 설명, 영문명, 초성(ㅅㅈ)',name:'카드 이름으로만 검색 (한글·영문·초성)',eff:'효과 설명으로 검색: 버리기 늘려주는, 돈 버는, 페이스 카드 재발동'}[S.scope];
+  $('#q').placeholder={all:'검색: 이름, 효과 설명, 영문명',name:'카드 이름으로만 검색 (한글·영문)',eff:'효과 설명으로 검색: 버리기 늘려주는, 돈 버는, 페이스 카드 재발동'}[S.scope];
   $('#view').classList.toggle('full',!!S.q.trim()&&S.scope!=='name');
 }
 function go(tab){S.tab=tab;try{history.replaceState(null,'','#'+tab);}catch(e){} render();window.scrollTo({top:0});}
